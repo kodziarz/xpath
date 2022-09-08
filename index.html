@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="main"></div>
+    <script type="module">
+        import Select from "./classes/Select.js"
+        import DataManager from "./classes/DataManager.js"
+
+        let fun = async () => {
+            let select = new Select()
+            document.getElementById("main").appendChild(select.getDOMElement())
+            let dataManager = new DataManager()
+            await dataManager.init()
+
+            select.oninput = async (currentText) => {
+                let result = dataManager.evaluate(currentText)
+                console.log(result);
+            }
+
+        }
+
+        fun()
+    </script>
+</body>
+
+</html>
