@@ -2,28 +2,33 @@ export default class Select {
 
     oninput = (currentText) => { console.error("Nie podstawiono wydarzenia") }
 
-    #rootInput
+    #rootDiv
+    #input
     #resultsDiv
 
     constructor() {
-        this.#rootInput = document.createElement("input")
-        this.#rootInput.type = "text"
-        this.#rootInput.oninput = this.oninput
+        this.#rootDiv = document.createElement("div")
+
+        this.#input = document.createElement("input")
+        this.#rootDiv.appendChild(this.#input)
+        this.#input.type = "text"
+        this.#input.oninput = () => { this.oninput(this.#input.value) }
 
         this.#resultsDiv = document.createElement("div")
-        this.#rootInput.appendChild(this.#resultsDiv)
+        this.#rootDiv.appendChild(this.#resultsDiv)
     }
 
     clearResults = () => {
         this.#resultsDiv.innerHTML = ""
     }
 
-    addRestult = (result) => {
+    addCity = (city, county, voivodship) => {
         let newResultDiv = document.createElement("div")
+        newResultDiv.innerText = city.children[4].textContent + ", " + county + ", " + voivodship
         this.#resultsDiv.appendChild(newResultDiv)
     }
 
     getDOMElement = () => {
-        return this.#rootInput
+        return this.#rootDiv
     }
 }

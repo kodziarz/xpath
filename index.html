@@ -15,16 +15,25 @@
         import DataManager from "./classes/DataManager.js"
 
         let fun = async () => {
+            console.log("wykonało się")
             let select = new Select()
             document.getElementById("main").appendChild(select.getDOMElement())
             let dataManager = new DataManager()
             await dataManager.init()
 
-            select.oninput = async (currentText) => {
-                let result = dataManager.evaluate(currentText)
-                console.log(result);
-            }
 
+            select.oninput = async (currentText) => {
+                // console.log("currentText: ", currentText);
+                let results = dataManager.findCities(currentText)
+                select.clearResults()
+                results.forEach((e) => {
+                    select.addCity(
+                        e,
+                        dataManager.findCountyNameByNumber(e.children[0].textContent, e.children[1].textContent),
+                        dataManager.findVoivoshipNameByNumber(e.children[0].textContent))
+                })
+                console.log(results);
+            }
         }
 
         fun()
